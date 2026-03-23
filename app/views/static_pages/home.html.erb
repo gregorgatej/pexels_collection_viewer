@@ -1,5 +1,11 @@
 <h1>Pexels Collection Viewer</h1>
-<p>Enter a Pexels collection ID to see its photos.</p>
+<p>
+  Enter a Pexels collection ID to see its photos.
+</p>
+
+<p>
+  <%= link_to "Photos provided by Pexels", "https://www.pexels.com", target: "_blank", rel: "noopener" %>
+</p>
 
 <%= form_with url: root_path, method: :get do %>
   <div>
@@ -14,4 +20,25 @@
 
 <% if @error_message.present? %>
   <p><%= @error_message %></p>
+<% end %>
+
+<% if @photos.present? %>
+  <h2>Photos from collection <%= @collection_id %></h2>
+
+  <div class="photos-grid">
+    <% @photos.each do |photo| %>
+      <article class="photo-card">
+        <%= link_to photo["url"], target: "_blank", rel: "noopener" do %>
+          <%= image_tag photo.dig("src", "large"), alt: photo["alt"].presence || "Pexels photo" %>
+        <% end %>
+
+        <p>
+          Photo by
+          <%= link_to photo["photographer"], photo["photographer_url"], target: "_blank", rel: "noopener" %>
+          on
+          <%= link_to "Pexels", photo["url"], target: "_blank", rel: "noopener" %>
+        </p>
+      </article>
+    <% end %>
+  </div>
 <% end %>
