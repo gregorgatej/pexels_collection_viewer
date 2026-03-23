@@ -1,2 +1,17 @@
 <h1>Pexels Collection Viewer</h1>
 <p>Enter a Pexels collection ID to see its photos.</p>
+
+<%= form_with url: root_path, method: :get do %>
+  <div>
+    <%= label_tag :collection_id, "Collection ID" %>
+    <%= text_field_tag :collection_id, params[:collection_id], placeholder: "e.g. 9mp14cx" %>
+  </div>
+
+  <div>
+    <%= submit_tag "View collection" %>
+  </div>
+<% end %>
+
+<% if @error_message.present? %>
+  <p><%= @error_message %></p>
+<% end %>
